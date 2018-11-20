@@ -121,7 +121,7 @@
           }else if(!captcha){
             return MessageBox.alert('指定验证码')
           }
-          result=await reqPwdLogin({name,pwd,captcha})
+          result=await reqPwdLogin(name,pwd,captcha)
 
           if(result.code!==0){
             this.updateCaptcha()
@@ -129,7 +129,7 @@
         }
         if(result.code===0){
           this.$store.dispatch('saveUser',result.data)
-          this.$route.replace('/profile')
+          this.$router.replace('/profile')
         }else{
           MessageBox.alert('登录失败')
         }

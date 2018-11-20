@@ -10,7 +10,7 @@ export const reqShops=({latitude,longitude})=>ajax(BASE+'/shops',{latitude,longi
 
 export const reqFoodCategorys=()=>ajax(BASE+'/catchas')
 
-export const reqPwdLogin=(name,pwd,captcha)=>ajax(BASE+'/lpgin_pwd',{name,pwd,captcha},'POST')
+export const reqPwdLogin=(name,pwd,captcha)=>ajax(BASE+'/login_pwd',{name,pwd,captcha},'POST')
 
 export const reqSendCode = (phone) => ajax(BASE + '/sendcode', {phone})
 
