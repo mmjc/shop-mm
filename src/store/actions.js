@@ -6,6 +6,7 @@ import {
   reqFoodCategorys,
   reqShops,
   reqUserInfo,
+  reqLogout,
 } from '../api'
 
 import {
@@ -13,6 +14,7 @@ import {
   RECEIVE_CATEGORYS,
   RECEIVE_SHOPS,
   RECEIVE_USER,
+  RESET_USER,
 } from './mutation-types'
 
 export default {
@@ -53,6 +55,13 @@ export default {
     if(result.code===0){
       const user=result.data
     commit(RECEIVE_USER,{user})
+    }
+  },
+
+  async logout({commit}){
+      const result=await reqLogout()
+    if(result.code===0){
+        commit(RESET_USER)
     }
   }
 

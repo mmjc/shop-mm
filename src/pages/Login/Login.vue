@@ -110,7 +110,7 @@
           }else if(!/^\d{6}$/.test(code)){
             return MessageBox.alert('验证码必须是6位数')
           }
-          result=await reqPwdLogin(phone,code)
+          result=await reqSmsLogin(phone,code)
 
           this.computeTime=0
         }else{

@@ -17,3 +17,5 @@ export const reqSendCode = (phone) => ajax(BASE + '/sendcode', {phone})
 export const reqSmsLogin=(phone,code)=>ajax(BASE+'/login_sms',{phone,code},'POST')
 
 export const reqUserInfo=()=>ajax(BASE+'/userInfo')
+
+export const reqLogout=()=>ajax(BASE+'/logout')
