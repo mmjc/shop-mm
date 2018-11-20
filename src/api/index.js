@@ -8,7 +8,7 @@ export const reqAddress = (longitude, latitude) => ajax(BASE+`/position/${latitu
 
 export const reqShops=({latitude,longitude})=>ajax(BASE+'/shops',{latitude,longitude})
 
-export const reqFoodCategorys=()=>ajax(BASE+'/catchas')
+export const reqFoodCategorys=()=>ajax(BASE+'/index_category')
 
 export const reqPwdLogin=(name,pwd,captcha)=>ajax(BASE+'/login_pwd',{name,pwd,captcha},'POST')
 
