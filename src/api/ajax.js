@@ -1,7 +1,8 @@
-/**
- * Created by mjc on 2018/11/19.
+/*
+用于发送ajax请求的函数
+包装axios
+函数的返回值是promise对象
  */
-
 import axios from 'axios'
 
 export default function ajax(url, data={}, method='GET') {

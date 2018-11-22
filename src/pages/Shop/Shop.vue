@@ -1,27 +1,33 @@
 <template>
   <div>
-  <ShopHeader/>
+    <ShopHeader/>
 
-  <div class="tab">
-    <div class="tab-item">
-      <router-link to="/shop/goods" replace>点餐</router-link>
+    <div class="tab">
+      <div class="tab-item">
+        <router-link to="/shop/goods" replace>点餐</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/shop/ratings" replace>评价</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/shop/info" replace>商家</router-link>
+      </div>
     </div>
-    <div class="tab-item">
-      <router-link to="/shop/ratings" replace>评价</router-link>
-    </div>
-    <div class="tab-item">
-      <router-link to="/shop/info" replace>商家</router-link>
-    </div>
-  </div>
 
-  <router-view/>
+    <router-view/>
   </div>
 </template>
 
 <script>
   import ShopHeader from '../../components/ShopHeader/ShopHeader.vue'
+
   export default {
-    components:{
+
+    mounted () {
+      this.$store.dispatch('getShopInfo')
+    },
+
+    components: {
       ShopHeader
     }
   }
@@ -29,6 +35,7 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "../../common/stylus/mixins.styl"
+
   .tab
     height 40px
     line-height 40px
@@ -55,7 +62,4 @@
             height 2px
             transform translateX(-50%)
             background #02a774
-
-
 </style>
-

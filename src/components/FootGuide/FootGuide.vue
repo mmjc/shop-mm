@@ -1,4 +1,4 @@
--<template>
+<template>
   <footer class="footer_guide border-1px">
     <span class="guide_item" :class="{on: $route.path==='/msite'}" @click="goto('/msite')">
       <span class="item_icon">
@@ -29,11 +29,12 @@
 
 <script>
   export default {
-     methods:{
-       goto(path){
-         this.$router.replace(path)
-       }
-     }
+    methods: {
+      goto (path) {
+
+        this.$router.replace(path)
+      }
+    }
   }
 </script>
 

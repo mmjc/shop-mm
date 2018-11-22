@@ -4,20 +4,20 @@
       <div class="login_header">
         <h2 class="login_logo">硅谷外卖</h2>
         <div class="login_header_title">
-          <a href="javascript:;" :class="{on:loginWay}" @click="loginWay=true">短信登录</a>
-          <a href="javascript:;" :class="{on:!loginWay}" @click="loginWay=false">密码登录</a>
+          <a href="javascript:;" :class="{on: loginWay}" @click="loginWay=true">短信登录</a>
+          <a href="javascript:;" :class="{on: !loginWay}" @click="loginWay=false">密码登录</a>
         </div>
       </div>
       <div class="login_content">
         <form>
-          <div :class="{on:loginWay}">
+          <div :class="{on: loginWay}">
             <section class="login_message">
               <input type="tel" maxlength="11" placeholder="手机号" v-model="phone">
               <button :disabled="!isRightPhone || computeTime>0"
                       class="get_verification"
                       :class="{right_phone_number: isRightPhone}"
                       @click.prevent="sendCode">
-                     {{computeTime>0 ? `已发送(${computeTime}s)` : '发送验证码'}}
+                {{computeTime>0 ? `已发送(${computeTime}s)` : '获取验证码'}}
               </button>
             </section>
             <section class="login_verification">
@@ -28,16 +28,16 @@
               <a href="javascript:;">《用户服务协议》</a>
             </section>
           </div>
-          <div :class="{on:!loginWay}">
+          <div :class="{on: !loginWay}">
             <section>
               <section class="login_message">
                 <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名" v-model="name">
               </section>
               <section class="login_verification">
                 <input :type="isShowPwd ? 'text' : 'password'" maxlength="8" placeholder="密码" v-model="pwd">
-                <div class="switch_button " @click="isShowPwd=!isShowPwd" :class="isShowPwd ? 'on':'off' ">
+                <div class="switch_button" @click="isShowPwd=!isShowPwd" :class="isShowPwd ? 'on' : 'off'">
                   <div class="switch_circle" :class="{right: isShowPwd}"></div>
-                  <span class="switch_text">{{isShowPwd ? 'text': '...'}}</span>
+                  <span class="switch_text">{{isShowPwd ? 'abc' : ''}}</span>
                 </div>
               </section>
               <section class="login_message">
@@ -58,80 +58,100 @@
 </template>
 
 <script>
-  import {reqSendCode,reqPwdLogin,reqSmsLogin} from '../../api'
-  import {Toast,MessageBox} from 'mint-ui'
+  import {reqSendCode, reqPwdLogin, reqSmsLogin} from '../../api'
+  import {Toast, MessageBox } from 'mint-ui'
   export default {
-    data(){
-      return{
-        loginWay:true,
-        phone:'',
-        code:'',
-        name:'',
-        pwd:'',
-        captcha:'',
-        computeTime:0,
-        isShowPwd:false
+    data () {
+      return {
+        loginWay: false,
+        phone: '',
+        code: '',
+        name: '',
+        pwd: '',
+        captcha: '',
+        computeTime: 0,
+        isShowPwd: false,
       }
     },
-    computed:{
-      isRightPhone() {
+
+    computed: {
+      isRightPhone () {
         return /^1\d{10}$/.test(this.phone)
       }
     },
-    methods:{
-     async sendCode(){
-        this.computeTime=30
-        const time=setInterval(()=>{
+
+    methods: {
+
+      async sendCode () {
+
+        this.computeTime = 30
+        const interalId = setInterval(() => {
+          console.log('----', this.computeTime)
           this.computeTime--
-          if(this.computeTime<=0){
-            this.computeTime=0
-            clearInterval(time)
-          }
-        },1000)
+          if(this.computeTime<=0) {
+            this.computeTime = 0
 
-       const result=await reqSendCode(this.phone)
-       if(result.code===0){
+            clearInterval(interalId)
+          }
+        }, 1000)
+
+
+        const result = await reqSendCode(this.phone)
+        if(result.code===0) {
           Toast('短信已发送')
-       }else{
-         this.computeTime=0
-         MessageBox.alert(result.msg,'提示')
-       }
-      },
-      updateCaptcha(){
-       this.$refs.captcha.src='http://localhost:5000/captcha?time='+Date.now()
+        } else {
+
+          this.computeTime = 0
+          MessageBox.alert(result.msg, '提示');
+        }
       },
 
-      async login(){
-        const {phone,code,name,pwd,captcha,loginWay}=this
+
+      updateCaptcha () {
+
+        this.$refs.captcha.src = 'http://localhost:5000/captcha?time='+Date.now()
+      },
+
+
+      async login () {
+
+        const {phone, code, name, pwd, captcha, loginWay} = this
         let result
-        if(loginWay){
-          if(!this.isRightPhone){
-            return MessageBox.alert('必须输入手机号')
-          }else if(!/^\d{6}$/.test(code)){
-            return MessageBox.alert('验证码必须是6位数')
+        if(loginWay) {
+          if(!this.isRightPhone) {
+            return MessageBox.alert('必须指定正确的手机号')
+          } else if (!/^\d{6}$/.test(code)) {
+            return MessageBox.alert('验证码必须是6位数字')
           }
-          result=await reqSmsLogin(phone,code)
 
-          this.computeTime=0
-        }else{
-          if(!name){
-            return MessageBox.alert('指定用户名')
-          }else if(!pwd){
-            return MessageBox.alert('指定密码')
-          }else if(!captcha){
-            return MessageBox.alert('指定验证码')
+          result = await reqSmsLogin(phone, code)
+
+
+          this.computeTime = 0
+        } else {
+          if(!name) {
+            return MessageBox.alert('必须指定用户名')
+          } else if(!pwd) {
+            return MessageBox.alert('必须指定密码')
+          } else if(!captcha) {
+            return MessageBox.alert('必须指定验证码')
           }
-          result=await reqPwdLogin(name,pwd,captcha)
 
-          if(result.code!==0){
+          result = await reqPwdLogin({name, pwd, captcha})
+
+          if(result.code!==0) {
             this.updateCaptcha()
           }
         }
-        if(result.code===0){
-          this.$store.dispatch('saveUser',result.data)
+
+
+        if(result.code===0) {
+
+          this.$store.dispatch('saveUser', result.data)
+
           this.$router.replace('/profile')
-        }else{
-          MessageBox.alert('登录失败')
+        } else {
+          MessageBox.alert('登陆失败')
         }
       }
     }
@@ -199,9 +219,9 @@
                 border 0
                 color #ccc
                 font-size 14px
+                background transparent
                 &.right_phone_number
                   color: black
-                /*background transparent*/
             .login_verification
               position relative
               margin-top 16px
@@ -230,7 +250,6 @@
                 &.on
                   background #02a774
                 >.switch_circle
-                //transform translateX(27px)
                   position absolute
                   top -1px
                   left -1px

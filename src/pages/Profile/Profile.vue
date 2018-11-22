@@ -1,20 +1,22 @@
 <template>
   <section class="profile">
     <TopHeader title="个人中心"/>
-    <section class="profile-number" @click="$router.push(user._id ? 'userinfo':'/login')">
+    <section class="profile-number" @click="$router.push(user._id ? '/userinfo' : '/login')">
       <a href="javascript:" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
           <p class="user-info-top" v-if="!user.phone">
-            {{user.name?user.name:'登录/注册'}}
+            {{user.name ? user.name : '登陆/注册'}}
           </p>
           <p v-if="!user.name">
-                <span class="user-icon">
-                  <i class="iconfont icon-shouji icon-mobile"></i>
-                </span>
-            <span class="icon-mobile-number" >{{user.phone? user.phone:'暂无绑定手机号'}}</span>
+            <span class="user-icon">
+              <i class="iconfont icon-shouji icon-mobile"></i>
+            </span>
+            <span class="icon-mobile-number">
+              {{user.phone ? user.phone : '暂无绑定手机号'}}
+            </span>
           </p>
         </div>
         <span class="arrow">
@@ -90,29 +92,30 @@
         </div>
       </a>
     </section>
+
     <section class="profile_my_order border-1px" v-if="user._id">
-      <mt-button type="danger" style="width: 100%" @click="logout">退出登录</mt-button>
+      <mt-button type="danger" style="width: 100%" @click="logout">退出登陆</mt-button>
     </section>
+
   </section>
 </template>
 
 <script>
   import {mapState} from 'vuex'
   import {MessageBox} from 'mint-ui'
-  import MtButton from "../../../../node_modules/mint-ui/packages/button/src/button";
   export default {
-    components: {MtButton},
-    computed:{
+    computed: {
       ...mapState(['user'])
     },
-    methods:{
-      logout(){
-        MessageBox.confirm('确认退出忙')
+
+    methods: {
+      logout () {
+        MessageBox.confirm('确定退出登陆吗?')
           .then(
-            action=>{
+            action => {
               this.$store.dispatch('logout')
             },
-            actions=>{}
+            action => {console.log('点击了取消')}
           )
       }
     }

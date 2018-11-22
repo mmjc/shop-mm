@@ -1,19 +1,11 @@
 <template>
-<div>shop ratins</div>
+  <div>ShopRatings</div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {}
-    },
-    methods: {},
-    computed: {},
-    components: {}
-  }
+  export default {}
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 
 </style>
-

@@ -1,5 +1,5 @@
-/**
- * Created by mjc on 2018/11/19.
+/*
+包含n个直接更新状态数据的对象
  */
 import {
   RECEIVE_ADDRESS,
@@ -7,22 +7,40 @@ import {
   RECEIVE_SHOPS,
   RECEIVE_USER,
   RESET_USER,
-}from './mutation-types'
+  RECEIVE_GOODS,
+  RECEIVE_RATINGS,
+  RECEIVE_INFO
+} from './mutation-types'
 
 export default {
-  [RECEIVE_ADDRESS](state,{address}){
-    state.address=address
+  [RECEIVE_ADDRESS] (state, {address}) {
+    state.address = address
   },
-  [RECEIVE_CATEGORYS](state,{categorys}){
-    state.categorys=categorys
+
+  [RECEIVE_CATEGORYS] (state, {categorys}) {
+    state.categorys = categorys
   },
-  [RECEIVE_SHOPS](state,{shops}){
-    state.shops=shops
+
+  [RECEIVE_SHOPS] (state, {shops}) {
+    state.shops = shops
   },
-  [RECEIVE_USER](state,{user}){
-    state.user=user
+
+  [RECEIVE_USER] (state, {user}) {
+    state.user = user
   },
-  [RESET_USER](state){
-    state.user={}
-  }
+  [RESET_USER] (state) {
+    state.user = {}
+  },
+
+  [RECEIVE_INFO](state, {info}) {
+    state.info = info
+  },
+
+  [RECEIVE_RATINGS](state, {ratings}) {
+    state.ratings = ratings
+  },
+
+  [RECEIVE_GOODS](state, {goods}) {
+    state.goods = goods
+  },
 }

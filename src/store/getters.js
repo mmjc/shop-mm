@@ -1,3 +1,6 @@
-/**
- * Created by mjc on 2018/11/19.
+/*
+Vuex最核心的管理对象
  */
+export default {
+
+}
