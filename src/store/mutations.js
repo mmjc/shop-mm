@@ -1,6 +1,7 @@
 /*
 包含n个直接更新状态数据的对象
  */
+import Vue from 'vue'
 import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
@@ -9,7 +10,9 @@ import {
   RESET_USER,
   RECEIVE_GOODS,
   RECEIVE_RATINGS,
-  RECEIVE_INFO
+  RECEIVE_INFO,
+  REDUCE_FOOD_COUNT,
+  ADD_FOOD_COUNT,
 } from './mutation-types'
 
 export default {
@@ -42,5 +45,23 @@ export default {
 
   [RECEIVE_GOODS](state, {goods}) {
     state.goods = goods
+  },
+  [ADD_FOOD_COUNT](state, {food}) {
+    if (food.count) {
+      food.count++
+    } else {
+      Vue.set(food, 'count', 1)
+      state.cardFoods.push(food)
+    }
+  },
+
+  [REDUCE_FOOD_COUNT](state, {food}) {
+    if (food.count) {
+      food.count--
+
+      if(food.count===0){
+        state.cardFoods.splice(state.cardFoods.indexOf(food),1)
+      }
+    }
   },
 }

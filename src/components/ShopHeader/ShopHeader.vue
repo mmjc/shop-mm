@@ -126,7 +126,8 @@
     },
     computed: {
       ...mapState(['info'])
-    }
+    },
+
   }
 </script>
 
